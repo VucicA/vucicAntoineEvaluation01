@@ -123,21 +123,20 @@ class serveurDns_O4():
     if len(result) == 4:
       for resultChamp in result:
         if int(resultChamp) > 0 & int(resultChamp) < 256:
-          def verifUrl_J2(url):
-            result = url.split('.')
-            if len(result) > 2:
-              print("malformedUrl")
-            elif len(result[1]) > 3:
-              print("malformedUrl") 
-            else :
-              for key, value in self.dico.items():
-                if(adresseIp in value):  
-                  print("existingIP")
-                  
-                else:
-                  self.dico[url] = adresseIp
-                  print("Ajout de {} : {} dans le dictionnaire".format(url, adresseIp))
-                  
+          resultUrl = url.split('.')
+          if len(resultUrl) > 2:
+            print("malformedUrl")
+          elif len(resultUrl[1]) > 3:
+            print("malformedUrl") 
+          else :
+            exist = 0
+            for key, value in self.dico.items():
+              if(adresseIp in value):  
+                print("existingIP")
+                exist = exist + 1
+            if exist == 0:
+              self.dico[url] = adresseIp
+              print("Ajout de {} : {} dans le dictionnaire".format(url, adresseIp))
         else:
           print("malformedAddress")
     else:
