@@ -74,21 +74,75 @@ def ipVerifFormat_E1(adressIp):
 
 ###### exercice 06
 def makeTLD_Q7(dico):
-  dico = makeDico_T3
-  lignes = dico.split(',')
-  for ligne in lignes:
-    partie = ligne.split(':')
-    
+  dicoTld = []
+  for key, value in dico.items():
+    if(verifUrl_J2(key) == True):
+      url = key.split('.')
+      
+      if url[1] not in dicoTld:
+      #if(VerifTLD_N3(dicoTld, url[1]) == False):
+        dicoTld.append(url[1])
+        print('Ajout de {} dans la liste'.format(url[1]))
+  print("Liste TLD : {}".format(dicoTld))
+  return dicoTld
 
 # Zone 2 ## zone pour les classes
 ###### exercice 07
-
+class serveurDns_O4():
+  def __init__(self, resolDNS):
+    self.dico = resolDNS
 
 ###### exercice 08
-
+  def resolDNS_S2(self, url):
+    print("Type de test = resol du DNS {}".format(url))
+    if(verifUrl_J2(url) == True):
+      if url in self.dico:
+        print("URL trouvee")
+      else:
+        print("URL introuvable")
+    else:
+      print("Erreur de format d'URL")
 
 ###### exercice 09
-    
+  def resolInverse_C8(self, adresseIp):
+    if(ipVerifFormat_E1(adresseIp) == True):
+      print("Type de test = resol inverse de l'ip {}".format(adresseIp))
+      for key, value in self.dico.items():
+        if(adresseIp in value):  
+          print("IP trouvee")
+          break
+        else:
+          print("IP introuvable")
+          break
+    else:
+      print("Erreur de format d'IP")
+
+###### exercice 10
+  def addAsso_K3(self, url, adresseIp):
+    result = adresseIp.split('.')
+    if len(result) == 4:
+      for resultChamp in result:
+        if int(resultChamp) > 0 & int(resultChamp) < 256:
+          def verifUrl_J2(url):
+            result = url.split('.')
+            if len(result) > 2:
+              print("malformedUrl")
+            elif len(result[1]) > 3:
+              print("malformedUrl") 
+            else :
+              for key, value in self.dico.items():
+                if(adresseIp in value):  
+                  print("existingIP")
+                  
+                else:
+                  self.dico[url] = adresseIp
+                  print("Ajout de {} : {} dans le dictionnaire".format(url, adresseIp))
+                  
+        else:
+          print("malformedAddress")
+    else:
+      print("malformedAddress")
+
 
 # Zone 3 ## zone pour les tests des fonctions
 
@@ -113,11 +167,13 @@ def main() :
 	###### exercice 03
   print("exercice 03 #######################")
   getTLD_P1("toto.frog")
+  getTLD_P1("toto.fr")
+  getTLD_P1("toto.com")
 
 	###### exercice 04
   print("exercice 04 #######################")
   VerifTLD_N3(['fr', 'com', 'net'], 'fr')
-  VerifTLD_N3(['fr', 'com', 'net'], 'fr')
+  VerifTLD_N3(['fr', 'com', 'net'], 'nzk')
 
 	###### exercice 05
   print("exercice 05 #######################")
@@ -126,24 +182,31 @@ def main() :
 
 	###### exercice 06
   print("exercice 06 #######################")
-
+  makeTLD_Q7(dico)
 
 
 	# Zone 4 ## zone pour les tests de la classe
 
 	###### exercice 07
   print("exercice 07 #######################")
-
+  s = serveurDns_O4(dico)
 
 	###### exercice 08
   print("exercice 08 #######################")
-
+  s.resolDNS_S2("Leboncoin.fr")
+  s.resolDNS_S2("Leboncoin.eu")
 
 	###### exercice 09
   print("exercice 09 #######################")
-	
+  s.resolInverse_C8('193.164.196.17')
+  s.resolInverse_C8('193.164.196.18')
+  
 	###### exercice 10
   print("exercice 10 #######################")
+  s.addAsso_K3('developpez.net', '87.98.128.200')
+  s.addAsso_K3('coding.nzl', '87.98.128.200')
+  s.addAsso_K3('developpez.net', '271.98.128.200')
+  s.addAsso_K3('developpez.net', '87.98.1280.200')
 
 if __name__=="__main__":
   print("main()")
